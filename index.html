@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Vertera Shop</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --tg-bg: #1e2f28;
+    --tg-secondary: #253b30;
+    --tg-tertiary: #2f4a3c;
+    --tg-accent: #829e6f;
+    --tg-accent-light: #a0bc8d;
+    --tg-text: #ffffff;
+    --tg-subtext: #7a9480;
+    --tg-border: #2e4438;
+    --tg-card: #243529;
+    --tg-success: #829e6f;
+    --tg-danger: #c0735a;
+    --nav-h: 68px;
+    --radius: 16px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    font-family: 'Manrope', sans-serif;
+    background: var(--tg-bg);
+    color: var(--tg-text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ─── HEADER ─── */
+  .header {
+    position: sticky; top: 0; z-index: 100;
+    background: #2F4A3C;
+    border-bottom: 1px solid #3d5e4d;
+    padding: 14px 16px 12px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .header-logo svg { height: 22px; display: block; }
+  .cart-btn {
+    position: relative; background: rgba(130,158,111,0.25);
+    border: 1px solid var(--tg-accent); cursor: pointer; border-radius: 12px;
+    padding: 8px 12px; color: var(--tg-text);
+    display: flex; align-items: center; gap: 6px;
+    font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 600;
+    transition: background .2s;
+  }
+  .cart-btn:active { background: var(--tg-accent); }
+  .cart-badge {
+    position: absolute; top: -5px; right: -5px;
+    background: var(--tg-danger); color: #fff;
+    border-radius: 50%; width: 18px; height: 18px;
+    font-size: 10px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    display: none;
+  }
+
+  /* ─── SEARCH ─── */
+  .search-wrap { padding: 12px 16px 0; }
+  .search-input {
+    width: 100%; background: var(--tg-card);
+    border: 1px solid var(--tg-border); border-radius: 12px;
+    padding: 10px 16px 10px 40px;
+    color: var(--tg-text); font-family: 'Manrope', sans-serif; font-size: 14px;
+    outline: none; transition: border-color .2s;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%237d8e9e' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.099zm-5.442 1.656a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: 14px center;
+  }
+  .search-input:focus { border-color: var(--tg-accent); }
+  .search-input::placeholder { color: var(--tg-subtext); }
+
+  /* ─── CATEGORIES ─── */
+  .cats-wrap { padding: 14px 16px 0; }
+  .cats {
+    display: flex; gap: 8px; overflow-x: auto;
+    scrollbar-width: none; padding-bottom: 2px;
+  }
+  .cats::-webkit-scrollbar { display: none; }
+  .cat-chip {
+    flex-shrink: 0; padding: 6px 14px;
+    border-radius: 20px; border: 1px solid var(--tg-border);
+    background: var(--tg-card); color: var(--tg-subtext);
+    font-size: 13px; font-weight: 500; cursor: pointer;
+    transition: all .2s;
+    white-space: nowrap;
+  }
+  .cat-chip.active {
+    background: var(--tg-accent); border-color: var(--tg-accent);
+    color: #fff;
+  }
+
+  /* ─── SECTION LABEL ─── */
+  .section-label {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 11px; font-weight: 600;
+    color: var(--tg-subtext); letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 18px 16px 10px;
+  }
+
+  /* ─── PRODUCT GRID ─── */
+  .grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 12px; padding: 0 16px;
+    padding-bottom: calc(var(--nav-h) + 20px);
+  }
+
+  .card {
+    background: var(--tg-card);
+    border: 1px solid var(--tg-border);
+    border-radius: var(--radius); overflow: hidden;
+    cursor: pointer;
+    transition: transform .15s, border-color .2s;
+    display: flex; flex-direction: column;
+    animation: fadeUp .4s ease both;
+  }
+  .card:active { transform: scale(0.97); }
+  .card.new { border-color: var(--tg-accent); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .card-img {
+    width: 100%; aspect-ratio: 1/1;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 52px; position: relative;
+    background: linear-gradient(135deg, var(--tg-secondary), var(--tg-tertiary));
+  }
+  .badge-new {
+    position: absolute; top: 8px; right: 8px;
+    background: var(--tg-accent); color: #fff;
+    font-size: 9px; font-weight: 700; padding: 2px 6px;
+    border-radius: 6px; letter-spacing: .5px;
+  }
+  .badge-sale {
+    position: absolute; top: 8px; right: 8px;
+    background: var(--tg-danger); color: #fff;
+    font-size: 9px; font-weight: 700; padding: 2px 6px;
+    border-radius: 6px;
+  }
+
+  .card-body { padding: 10px 12px 12px; flex: 1; display: flex; flex-direction: column; }
+  .card-name {
+    font-size: 13px; font-weight: 600; line-height: 1.3;
+    margin-bottom: 4px;
+  }
+  .card-sub {
+    font-size: 11px; color: var(--tg-subtext); flex: 1; margin-bottom: 8px;
+  }
+  .card-footer { display: flex; align-items: center; justify-content: space-between; }
+  .price { font-family: 'Unbounded', sans-serif; font-size: 13px; font-weight: 700; color: var(--tg-accent); }
+  .price-old { font-size: 10px; color: var(--tg-subtext); text-decoration: line-through; }
+
+  .add-btn {
+    width: 28px; height: 28px; border-radius: 8px;
+    background: var(--tg-accent); border: none;
+    color: #fff; font-size: 18px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .15s, transform .1s;
+    flex-shrink: 0;
+  }
+  .add-btn:active { transform: scale(0.9); }
+  .add-btn.added { background: var(--tg-success); }
+
+  /* ─── CART PANEL ─── */
+  .overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,.55); z-index: 200;
+    opacity: 0; pointer-events: none; transition: opacity .3s;
+  }
+  .overlay.visible { opacity: 1; pointer-events: all; }
+
+  .cart-panel {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: var(--tg-secondary);
+    border-radius: 20px 20px 0 0;
+    border-top: 1px solid var(--tg-border);
+    z-index: 300;
+    transform: translateY(100%); transition: transform .35s cubic-bezier(.32,1,.6,1);
+    max-height: 75vh; display: flex; flex-direction: column;
+  }
+  .cart-panel.open { transform: translateY(0); }
+
+  .cart-handle {
+    width: 36px; height: 4px; border-radius: 2px;
+    background: var(--tg-border); margin: 12px auto 0;
+  }
+  .cart-header {
+    padding: 14px 16px; font-family: 'Unbounded', sans-serif;
+    font-size: 15px; font-weight: 700;
+    border-bottom: 1px solid var(--tg-border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .close-cart {
+    background: var(--tg-card); border: none; cursor: pointer;
+    color: var(--tg-subtext); border-radius: 8px;
+    padding: 4px 10px; font-size: 18px;
+  }
+
+  .cart-items { overflow-y: auto; flex: 1; padding: 0 16px; }
+  .empty-cart {
+    text-align: center; padding: 40px 0;
+    color: var(--tg-subtext); font-size: 14px;
+  }
+  .empty-icon { font-size: 40px; margin-bottom: 8px; }
+
+  .cart-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 0; border-bottom: 1px solid var(--tg-border);
+  }
+  .ci-emoji { font-size: 28px; flex-shrink: 0; }
+  .ci-info { flex: 1; }
+  .ci-name { font-size: 13px; font-weight: 600; }
+  .ci-price { font-size: 12px; color: var(--tg-accent); margin-top: 2px; }
+  .ci-controls { display: flex; align-items: center; gap: 8px; }
+  .qty-btn {
+    width: 26px; height: 26px; border-radius: 8px;
+    background: var(--tg-card); border: 1px solid var(--tg-border);
+    color: var(--tg-text); font-size: 16px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .qty-num { font-size: 14px; font-weight: 600; min-width: 20px; text-align: center; }
+
+  .cart-footer { padding: 16px; border-top: 1px solid var(--tg-border); }
+  .total-row {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 14px;
+  }
+  .total-label { color: var(--tg-subtext); font-size: 14px; }
+  .total-sum { font-family: 'Unbounded', sans-serif; font-size: 18px; font-weight: 700; }
+
+  .order-btn {
+    width: 100%; padding: 14px;
+    background: linear-gradient(135deg, var(--tg-accent), #4a6b3a);
+    border: none; border-radius: 14px;
+    color: #fff; font-family: 'Unbounded', sans-serif;
+    font-size: 14px; font-weight: 700; cursor: pointer;
+    letter-spacing: .5px;
+    transition: opacity .2s, transform .1s;
+  }
+  .order-btn:active { opacity: .85; transform: scale(0.98); }
+
+  /* ─── TOAST ─── */
+  .toast {
+    position: fixed; bottom: calc(var(--nav-h) + 16px); left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--tg-success); color: #fff;
+    padding: 10px 20px; border-radius: 50px;
+    font-size: 13px; font-weight: 600;
+    opacity: 0; transition: all .3s; pointer-events: none;
+    z-index: 400; white-space: nowrap;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-logo">
+    <!-- VERTERA wordmark, recreated as SVG matching brand style -->
+    <svg viewBox="0 0 220 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <text x="0" y="28" font-family="'Unbounded', sans-serif" font-size="28" font-weight="700" fill="white" letter-spacing="6">VERTERA</text>
+    </svg>
+  </div>
+  <button class="cart-btn" onclick="openCart()">
+    🛒 Корзина
+    <div class="cart-badge" id="cartBadge">0</div>
+  </button>
+</div>
+
+<!-- SEARCH -->
+<div class="search-wrap">
+  <input class="search-input" type="text" placeholder="Поиск товаров..." id="searchInput" oninput="filterProducts()">
+</div>
+
+<!-- CATEGORIES -->
+<div class="cats-wrap">
+  <div class="cats" id="catsRow"></div>
+</div>
+
+<div class="section-label" id="sectionLabel">Все товары</div>
+
+<!-- GRID -->
+<div class="grid" id="grid"></div>
+
+<!-- CART OVERLAY -->
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+
+<!-- CART PANEL -->
+<div class="cart-panel" id="cartPanel">
+  <div class="cart-handle"></div>
+  <div class="cart-header">
+    🛒 Корзина
+    <button class="close-cart" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-footer">
+    <div class="total-row">
+      <span class="total-label">Итого:</span>
+      <span class="total-sum" id="totalSum">0 ₽</span>
+    </div>
+    <button class="order-btn" onclick="placeOrder()">Оформить заказ</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── DATA ───────────────────────────────────────────────
+const products = [
+  { id:1,  name: 'AirPods Pro',    desc: 'Активное шумоподавление',  price: 19990, emoji: '🎧', cat: 'Техника',  badge: 'new' },
+  { id:2,  name: 'Смарт-часы',     desc: 'AMOLED, 7 дней автономно',  price: 8490,  emoji: '⌚', cat: 'Техника',  badge: null  },
+  { id:3,  name: 'Кроссовки Retro',desc: 'Лимитированный выпуск',     price: 6990,  emoji: '👟', cat: 'Одежда',   badge: 'sale', old: 9990 },
+  { id:4,  name: 'Рюкзак Pro',     desc: '30L, водонепроницаемый',    price: 3490,  emoji: '🎒', cat: 'Одежда',   badge: null  },
+  { id:5,  name: 'Клавиатура',     desc: 'Механика, RGB подсветка',   price: 5990,  emoji: '⌨️', cat: 'Техника',  badge: null  },
+  { id:6,  name: 'Кофе Specialty', desc: 'Эфиопия, 250г, обжарка',    price: 890,   emoji: '☕', cat: 'Продукты', badge: 'new' },
+  { id:7,  name: 'Термос',         desc: 'Сталь, 750мл, 24ч тепло',   price: 2190,  emoji: '🫙', cat: 'Продукты', badge: null  },
+  { id:8,  name: 'Книга UX',       desc: 'Дизайн для реального мира', price: 1490,  emoji: '📗', cat: 'Книги',    badge: null  },
+  { id:9,  name: 'Дневник',        desc: 'А5, 192 стр, пробковая обложка', price: 690, emoji: '📓', cat: 'Книги', badge: null },
+  { id:10, name: 'Чехол iPhone',   desc: 'Прозрачный, MagSafe',       price: 1190,  emoji: '📱', cat: 'Техника',  badge: 'sale', old: 1690 },
+];
+
+const categories = ['Все', ...new Set(products.map(p => p.cat))];
+let activecat = 'Все';
+let cart = {};
+
+// ─── INIT ────────────────────────────────────────────────
+if (window.Telegram?.WebApp) {
+  Telegram.WebApp.ready();
+  Telegram.WebApp.expand();
+  const tc = Telegram.WebApp.themeParams;
+  if (tc.bg_color) document.documentElement.style.setProperty('--tg-bg', tc.bg_color);
+}
+
+function init() {
+  renderCats();
+  renderGrid(products);
+}
+
+// ─── CATEGORIES ─────────────────────────────────────────
+function renderCats() {
+  const row = document.getElementById('catsRow');
+  row.innerHTML = categories.map(c =>
+    `<div class="cat-chip ${c==='Все'?'active':''}" onclick="selectCat('${c}')">${c}</div>`
+  ).join('');
+}
+
+function selectCat(cat) {
+  activecat = cat;
+  document.querySelectorAll('.cat-chip').forEach(el => {
+    el.classList.toggle('active', el.textContent === cat);
+  });
+  const label = document.getElementById('sectionLabel');
+  label.textContent = cat === 'Все' ? 'Все товары' : cat;
+  filterProducts();
+}
+
+// ─── FILTER ──────────────────────────────────────────────
+function filterProducts() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  const filtered = products.filter(p => {
+    const matchCat = activecat === 'Все' || p.cat === activecat;
+    const matchQ = !q || p.name.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q);
+    return matchCat && matchQ;
+  });
+  renderGrid(filtered);
+}
+
+// ─── GRID ────────────────────────────────────────────────
+function renderGrid(list) {
+  const grid = document.getElementById('grid');
+  if (!list.length) {
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px 0;color:var(--tg-subtext)">
+      <div style="font-size:36px;margin-bottom:8px">🔍</div>Ничего не найдено</div>`;
+    return;
+  }
+  grid.innerHTML = list.map((p, i) => {
+    const inCart = !!cart[p.id];
+    const badge = p.badge === 'new'
+      ? `<div class="badge-new">NEW</div>`
+      : p.badge === 'sale' ? `<div class="badge-sale">SALE</div>` : '';
+    return `
+    <div class="card ${p.badge==='new'?'new':''}" style="animation-delay:${i*50}ms">
+      <div class="card-img">${p.emoji}${badge}</div>
+      <div class="card-body">
+        <div class="card-name">${p.name}</div>
+        <div class="card-sub">${p.desc}</div>
+        <div class="card-footer">
+          <div>
+            <div class="price">${p.price.toLocaleString()} ₽</div>
+            ${p.old ? `<div class="price-old">${p.old.toLocaleString()} ₽</div>` : ''}
+          </div>
+          <button class="add-btn ${inCart?'added':''}" id="btn-${p.id}" onclick="addToCart(${p.id})">
+            ${inCart ? '✓' : '+'}
+          </button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ─── CART ────────────────────────────────────────────────
+function addToCart(id) {
+  const p = products.find(x => x.id === id);
+  if (!cart[id]) cart[id] = { ...p, qty: 0 };
+  cart[id].qty++;
+  updateCartBadge();
+  const btn = document.getElementById(`btn-${id}`);
+  if (btn) { btn.classList.add('added'); btn.textContent = '✓'; }
+  showToast(`${p.emoji} ${p.name} добавлен`);
+}
+
+function updateCartBadge() {
+  const total = Object.values(cart).reduce((s, i) => s + i.qty, 0);
+  const badge = document.getElementById('cartBadge');
+  badge.textContent = total;
+  badge.style.display = total ? 'flex' : 'none';
+}
+
+function openCart() {
+  renderCartPanel();
+  document.getElementById('cartPanel').classList.add('open');
+  document.getElementById('overlay').classList.add('visible');
+}
+
+function closeCart() {
+  document.getElementById('cartPanel').classList.remove('open');
+  document.getElementById('overlay').classList.remove('visible');
+}
+
+function renderCartPanel() {
+  const items = Object.values(cart).filter(i => i.qty > 0);
+  const el = document.getElementById('cartItems');
+  if (!items.length) {
+    el.innerHTML = `<div class="empty-cart"><div class="empty-icon">🛒</div>Корзина пуста</div>`;
+    document.getElementById('totalSum').textContent = '0 ₽';
+    return;
+  }
+  el.innerHTML = items.map(i => `
+    <div class="cart-item">
+      <div class="ci-emoji">${i.emoji}</div>
+      <div class="ci-info">
+        <div class="ci-name">${i.name}</div>
+        <div class="ci-price">${(i.price * i.qty).toLocaleString()} ₽</div>
+      </div>
+      <div class="ci-controls">
+        <button class="qty-btn" onclick="changeQty(${i.id},-1)">−</button>
+        <div class="qty-num">${i.qty}</div>
+        <button class="qty-btn" onclick="changeQty(${i.id},1)">+</button>
+      </div>
+    </div>`).join('');
+  const total = items.reduce((s, i) => s + i.price * i.qty, 0);
+  document.getElementById('totalSum').textContent = total.toLocaleString() + ' ₽';
+}
+
+function changeQty(id, delta) {
+  if (!cart[id]) return;
+  cart[id].qty += delta;
+  if (cart[id].qty <= 0) delete cart[id];
+  updateCartBadge();
+  renderCartPanel();
+  // update grid button
+  const btn = document.getElementById(`btn-${id}`);
+  if (btn) {
+    const inCart = !!cart[id];
+    btn.classList.toggle('added', inCart);
+    btn.textContent = inCart ? '✓' : '+';
+  }
+}
+
+function placeOrder() {
+  const items = Object.values(cart);
+  if (!items.length) return;
+  const total = items.reduce((s, i) => s + i.price * i.qty, 0);
+  const text = `Заказ оформлен!\n${items.map(i=>`${i.emoji} ${i.name} × ${i.qty}`).join('\n')}\nИтого: ${total.toLocaleString()} ₽`;
+  if (window.Telegram?.WebApp) {
+    Telegram.WebApp.showAlert(text, () => {});
+    Telegram.WebApp.sendData(JSON.stringify({ items, total }));
+  } else {
+    alert(text);
+  }
+  cart = {};
+  updateCartBadge();
+  closeCart();
+  renderGrid(products);
+}
+
+// ─── TOAST ───────────────────────────────────────────────
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 1800);
+}
+
+// ─── GO ──────────────────────────────────────────────────
+init();
+</script>
+</body>
+</html>
