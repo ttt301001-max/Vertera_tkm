@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Vertera Shop</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --tg-bg: #1e2f28;
+    --tg-secondary: #253b30;
+    --tg-tertiary: #2f4a3c;
+    --tg-accent: #829e6f;
+    --tg-accent-light: #a0bc8d;
+    --tg-text: #ffffff;
+    --tg-subtext: #7a9480;
+    --tg-border: #2e4438;
+    --tg-card: #243529;
+    --tg-success: #829e6f;
+    --tg-danger: #c0735a;
+    --nav-h: 68px;
+    --radius: 16px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    font-family: 'Manrope', sans-serif;
+    background: var(--tg-bg);
+    color: var(--tg-text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ─── HEADER ─── */
+  .header {
+    position: sticky; top: 0; z-index: 100;
+    background: #2F4A3C;
+    border-bottom: 1px solid #3d5e4d;
+    padding: 14px 16px 12px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .header-logo svg { height: 22px; display: block; }
+  /* cart hidden */
+
+  /* ─── WELCOME BANNER ─── */
+  .welcome-banner {
+    margin: 14px 16px 0;
+    background: linear-gradient(135deg, #2f4a3c, #3a5e4a);
+    border: 1px solid #4a7a5e;
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    font-size: 13px; color: #c8dfc8; line-height: 1.5;
+    text-align: center; font-weight: 500;
+  }
+
+  /* ─── FOOTER CONTACT ─── */
+  .contact-footer {
+    margin: 10px 16px 28px;
+    background: var(--tg-card);
+    border: 1px solid var(--tg-border);
+    border-radius: var(--radius);
+    padding: 16px; text-align: center;
+  }
+  .contact-footer p { font-size: 13px; color: var(--tg-subtext); line-height: 1.6; }
+  .contact-footer a {
+    color: var(--tg-accent); font-weight: 700; text-decoration: none;
+    font-size: 15px; display: block; margin-top: 8px;
+  }
+
+  /* ─── SEARCH ─── */
+  .search-wrap { padding: 12px 16px 0; }
+  .search-input {
+    width: 100%; background: var(--tg-card);
+    border: 1px solid var(--tg-border); border-radius: 12px;
+    padding: 10px 16px 10px 40px;
+    color: var(--tg-text); font-family: 'Manrope', sans-serif; font-size: 14px;
+    outline: none; transition: border-color .2s;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%237d8e9e' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.099zm-5.442 1.656a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: 14px center;
+  }
+  .search-input:focus { border-color: var(--tg-accent); }
+  .search-input::placeholder { color: var(--tg-subtext); }
+
+  /* ─── CATEGORIES ─── */
+  .cats-wrap { padding: 14px 16px 0; }
+  .cats {
+    display: flex; gap: 8px; overflow-x: auto;
+    scrollbar-width: none; padding-bottom: 2px;
+  }
+  .cats::-webkit-scrollbar { display: none; }
+  .cat-chip {
+    flex-shrink: 0; padding: 6px 14px;
+    border-radius: 20px; border: 1px solid var(--tg-border);
+    background: var(--tg-card); color: var(--tg-subtext);
+    font-size: 13px; font-weight: 500; cursor: pointer;
+    transition: all .2s;
+    white-space: nowrap;
+  }
+  .cat-chip.active {
+    background: var(--tg-accent); border-color: var(--tg-accent);
+    color: #fff;
+  }
+
+  /* ─── SECTION LABEL ─── */
+  .section-label {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 11px; font-weight: 600;
+    color: var(--tg-subtext); letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 18px 16px 10px;
+  }
+
+  /* ─── PRODUCT GRID ─── */
+  .grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 12px; padding: 0 16px;
+    padding-bottom: 12px;
+  }
+
+  .card {
+    background: var(--tg-card);
+    border: 1px solid var(--tg-border);
+    border-radius: var(--radius); overflow: hidden;
+    cursor: pointer;
+    transition: transform .15s, border-color .2s;
+    display: flex; flex-direction: column;
+    animation: fadeUp .4s ease both;
+  }
+  .card:active { transform: scale(0.97); }
+  .card.new { border-color: var(--tg-accent); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .card-img {
+    width: 100%; aspect-ratio: 1/1;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 52px; position: relative;
+    background: linear-gradient(135deg, var(--tg-secondary), var(--tg-tertiary));
+  }
+  .badge-new {
+    position: absolute; top: 8px; right: 8px;
+    background: var(--tg-accent); color: #fff;
+    font-size: 9px; font-weight: 700; padding: 2px 6px;
+    border-radius: 6px; letter-spacing: .5px;
+  }
+  .badge-sale {
+    position: absolute; top: 8px; right: 8px;
+    background: var(--tg-danger); color: #fff;
+    font-size: 9px; font-weight: 700; padding: 2px 6px;
+    border-radius: 6px;
+  }
+
+  .card-body { padding: 10px 12px 12px; flex: 1; display: flex; flex-direction: column; }
+  .card-name {
+    font-size: 13px; font-weight: 600; line-height: 1.3;
+    margin-bottom: 4px;
+  }
+  .card-sub {
+    font-size: 11px; color: var(--tg-subtext); flex: 1; margin-bottom: 8px;
+  }
+  .card-footer { display: flex; align-items: center; justify-content: space-between; }
+  .price { font-family: 'Unbounded', sans-serif; font-size: 13px; font-weight: 700; color: var(--tg-accent); }
+  .price-old { font-size: 10px; color: var(--tg-subtext); text-decoration: line-through; }
+
+  /* add-btn hidden */
+
+  /* ─── CART PANEL ─── */
+  .overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,.55); z-index: 200;
+    opacity: 0; pointer-events: none; transition: opacity .3s;
+  }
+  .overlay.visible { opacity: 1; pointer-events: all; }
+
+  .cart-panel {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: var(--tg-secondary);
+    border-radius: 20px 20px 0 0;
+    border-top: 1px solid var(--tg-border);
+    z-index: 300;
+    transform: translateY(100%); transition: transform .35s cubic-bezier(.32,1,.6,1);
+    max-height: 75vh; display: flex; flex-direction: column;
+  }
+  .cart-panel.open { transform: translateY(0); }
+
+  .cart-handle {
+    width: 36px; height: 4px; border-radius: 2px;
+    background: var(--tg-border); margin: 12px auto 0;
+  }
+  .cart-header {
+    padding: 14px 16px; font-family: 'Unbounded', sans-serif;
+    font-size: 15px; font-weight: 700;
+    border-bottom: 1px solid var(--tg-border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .close-cart {
+    background: var(--tg-card); border: none; cursor: pointer;
+    color: var(--tg-subtext); border-radius: 8px;
+    padding: 4px 10px; font-size: 18px;
+  }
+
+  .cart-items { overflow-y: auto; flex: 1; padding: 0 16px; }
+  .empty-cart {
+    text-align: center; padding: 40px 0;
+    color: var(--tg-subtext); font-size: 14px;
+  }
+  .empty-icon { font-size: 40px; margin-bottom: 8px; }
+
+  .cart-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 0; border-bottom: 1px solid var(--tg-border);
+  }
+  .ci-emoji { font-size: 28px; flex-shrink: 0; }
+  .ci-info { flex: 1; }
+  .ci-name { font-size: 13px; font-weight: 600; }
+  .ci-price { font-size: 12px; color: var(--tg-accent); margin-top: 2px; }
+  .ci-controls { display: flex; align-items: center; gap: 8px; }
+  .qty-btn {
+    width: 26px; height: 26px; border-radius: 8px;
+    background: var(--tg-card); border: 1px solid var(--tg-border);
+    color: var(--tg-text); font-size: 16px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .qty-num { font-size: 14px; font-weight: 600; min-width: 20px; text-align: center; }
+
+  .cart-footer { padding: 16px; border-top: 1px solid var(--tg-border); }
+  .total-row {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 14px;
+  }
+  .total-label { color: var(--tg-subtext); font-size: 14px; }
+  .total-sum { font-family: 'Unbounded', sans-serif; font-size: 18px; font-weight: 700; }
+
+  .order-btn {
+    width: 100%; padding: 14px;
+    background: linear-gradient(135deg, var(--tg-accent), #4a6b3a);
+    border: none; border-radius: 14px;
+    color: #fff; font-family: 'Unbounded', sans-serif;
+    font-size: 14px; font-weight: 700; cursor: pointer;
+    letter-spacing: .5px;
+    transition: opacity .2s, transform .1s;
+  }
+  .order-btn:active { opacity: .85; transform: scale(0.98); }
+
+  /* ─── TOAST ─── */
+  .toast {
+    position: fixed; bottom: calc(var(--nav-h) + 16px); left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--tg-success); color: #fff;
+    padding: 10px 20px; border-radius: 50px;
+    font-size: 13px; font-weight: 600;
+    opacity: 0; transition: all .3s; pointer-events: none;
+    z-index: 400; white-space: nowrap;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-logo">
+    <svg viewBox="0 0 220 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <text x="0" y="28" font-family="'Unbounded', sans-serif" font-size="28" font-weight="700" fill="white" letter-spacing="6">VERTERA</text>
+    </svg>
+  </div>
+</div>
+
+<!-- WELCOME BANNER -->
+<div class="welcome-banner">
+  🌿 Добро пожаловать в каталог продукции компании
+</div>
+
+<!-- SEARCH -->
+<div class="search-wrap">
+  <input class="search-input" type="text" placeholder="Поиск товаров..." id="searchInput" oninput="filterProducts()">
+</div>
+
+<!-- CATEGORIES -->
+<div class="cats-wrap">
+  <div class="cats" id="catsRow"></div>
+</div>
+
+<div class="section-label" id="sectionLabel">Все товары</div>
+
+<!-- GRID -->
+<div class="grid" id="grid"></div>
+
+<!-- CONTACT FOOTER -->
+<div class="contact-footer">
+  <p>Мы очень рады видеть вас у нас в электронном каталоге,<br>для заказа позвоните по номеру</p>
+  <a href="tel:+99363327177">+993 63 32-71-77</a>
+</div>
+
+<script>
+// ─── DATA ───────────────────────────────────────────────
+const products = [
+  { id:1,  name: 'Гель алоэ вера',        desc: 'Увлажняющий, 250мл',           price: 890,  emoji: '🧴', cat: 'Гели',              badge: 'new' },
+  { id:2,  name: 'Гель для душа',         desc: 'С экстрактом спирулины',        price: 650,  emoji: '🫧', cat: 'Гели',              badge: null  },
+  { id:3,  name: 'Гель-бальзам',          desc: 'Для тела, восстановление',      price: 1100, emoji: '💚', cat: 'Гели',              badge: null  },
+  { id:4,  name: 'Каша овсяная',          desc: 'С пробиотиками, 400г',          price: 490,  emoji: '🥣', cat: 'Детское питание',   badge: 'new' },
+  { id:5,  name: 'Пюре яблоко-груша',     desc: 'Без сахара, 120г',              price: 120,  emoji: '🍏', cat: 'Детское питание',   badge: null  },
+  { id:6,  name: 'Смесь молочная',        desc: 'С 6 месяцев, 300г',             price: 890,  emoji: '🍼', cat: 'Детское питание',   badge: null  },
+  { id:7,  name: 'Крем дневной',          desc: 'SPF 20, увлажнение',            price: 1290, emoji: '✨', cat: 'Косметика',         badge: 'new' },
+  { id:8,  name: 'Сыворотка для лица',    desc: 'Гиалуроновая кислота',          price: 1890, emoji: '💧', cat: 'Косметика',         badge: null  },
+  { id:9,  name: 'Маска для волос',       desc: 'Восстановление, 200мл',         price: 750,  emoji: '💆', cat: 'Косметика',         badge: null  },
+  { id:10, name: 'Порошок универсальный', desc: 'Концентрат, 1кг',               price: 590,  emoji: '🫧', cat: 'Порошки',           badge: null  },
+  { id:11, name: 'Порошок детский',       desc: 'Гипоаллергенный, 800г',         price: 690,  emoji: '👶', cat: 'Порошки',           badge: 'new' },
+  { id:12, name: 'Капсулы для стирки',    desc: '30 штук, цветное бельё',        price: 490,  emoji: '🫙', cat: 'Порошки',           badge: null  },
+];
+
+const categories = ['Все', 'Гели', 'Детское питание', 'Косметика', 'Порошки'];
+let activecat = 'Все';
+
+// ─── INIT ────────────────────────────────────────────────
+if (window.Telegram?.WebApp) {
+  Telegram.WebApp.ready();
+  Telegram.WebApp.expand();
+}
+
+function init() {
+  renderCats();
+  renderGrid(products);
+}
+
+// ─── CATEGORIES ─────────────────────────────────────────
+function renderCats() {
+  const row = document.getElementById('catsRow');
+  row.innerHTML = categories.map(c =>
+    `<div class="cat-chip ${c==='Все'?'active':''}" onclick="selectCat('${c}')">${c}</div>`
+  ).join('');
+}
+
+function selectCat(cat) {
+  activecat = cat;
+  document.querySelectorAll('.cat-chip').forEach(el => {
+    el.classList.toggle('active', el.textContent === cat);
+  });
+  const label = document.getElementById('sectionLabel');
+  label.textContent = cat === 'Все' ? 'Все товары' : cat;
+  filterProducts();
+}
+
+// ─── FILTER ──────────────────────────────────────────────
+function filterProducts() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  const filtered = products.filter(p => {
+    const matchCat = activecat === 'Все' || p.cat === activecat;
+    const matchQ = !q || p.name.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q);
+    return matchCat && matchQ;
+  });
+  renderGrid(filtered);
+}
+
+// ─── GRID ────────────────────────────────────────────────
+function renderGrid(list) {
+  const grid = document.getElementById('grid');
+  if (!list.length) {
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px 0;color:var(--tg-subtext)">
+      <div style="font-size:36px;margin-bottom:8px">🔍</div>Ничего не найдено</div>`;
+    return;
+  }
+  grid.innerHTML = list.map((p, i) => {
+    const badge = p.badge === 'new'
+      ? `<div class="badge-new">NEW</div>`
+      : p.badge === 'sale' ? `<div class="badge-sale">SALE</div>` : '';
+    return `
+    <div class="card ${p.badge==='new'?'new':''}" style="animation-delay:${i*50}ms">
+      <div class="card-img">${p.emoji}${badge}</div>
+      <div class="card-body">
+        <div class="card-name">${p.name}</div>
+        <div class="card-sub">${p.desc}</div>
+        <div class="card-footer">
+          <div>
+            <div class="price">${p.price.toLocaleString()} ₽</div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ─── GO ──────────────────────────────────────────────────
+init();
+</script>
+</body>
+</html>
