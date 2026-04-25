@@ -101,33 +101,6 @@ body { font-family:'Manrope',sans-serif; background:var(--bg); color:var(--text)
 .header-flag { font-size:14px; }
 
 /* WELCOME */
-.discount-banner {
-  margin:10px 16px 0;
-  background:linear-gradient(135deg,#829e6f,#4a6b3a);
-  border-radius:var(--radius);
-  padding:14px 16px;
-  display:flex; align-items:center; justify-content:space-between; gap:10px;
-}
-.discount-left { flex:1; }
-.discount-pct {
-  font-family:'Unbounded',sans-serif;
-  font-size:28px; font-weight:700; color:#fff; line-height:1; margin-bottom:2px;
-}
-.discount-desc { font-size:11px; color:rgba(255,255,255,.85); line-height:1.4; }
-.discount-btn {
-  flex-shrink:0; padding:10px 14px;
-  background:#fff; border:none; border-radius:12px;
-  color:#4a6b3a; font-family:'Unbounded',sans-serif;
-  font-size:10px; font-weight:700; cursor:pointer; transition:opacity .2s; white-space:nowrap;
-}
-.discount-btn:active { opacity:.85; }
-.header-more-btn {
-  flex-shrink:0; padding:5px 10px;
-  background:rgba(255,255,255,.15); border:1px solid rgba(255,255,255,.3);
-  border-radius:10px; color:#fff; font-size:11px; font-weight:600;
-  cursor:pointer; white-space:nowrap; transition:background .2s;
-}
-.header-more-btn:active { background:rgba(255,255,255,.25); }
 .welcome {
   margin:12px 16px 0;
   background:linear-gradient(135deg,#2f4a3c,#3a5e4a);
@@ -257,6 +230,13 @@ body { font-family:'Manrope',sans-serif; background:var(--bg); color:var(--text)
 }
 .top-lang-item:active, .top-lang-item.active { background:rgba(130,158,111,.15); }
 
+.reviews-block { padding: 14px 0 6px; }
+.reviews-label { font-size:10px; font-weight:700; color:var(--subtext); letter-spacing:1px; text-transform:uppercase; margin-bottom:10px; }
+.review-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:12px 14px; margin-bottom:8px; }
+.review-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:5px; }
+.review-name { font-size:12px; font-weight:600; }
+.review-stars { color:#f4b942; font-size:12px; }
+.review-text { font-size:12px; color:#a8c8a8; line-height:1.5; }
 .more-info-wrap { padding: 4px 20px 0; }
 .more-info-btn {
   width:100%; margin-top:18px;
@@ -304,7 +284,6 @@ body { font-family:'Manrope',sans-serif; background:var(--bg); color:var(--text)
     <text x="0" y="28" font-family="'Unbounded', sans-serif" font-size="28" font-weight="700" fill="white" letter-spacing="6">VERTERA</text>
   </svg>
   <div class="header-info">
-    <button class="header-more-btn" id="headerMoreBtn" onclick="openBotLink('https://t.me/Verteratkmbot?start=start')">ℹ️ <span id="headerMoreLabel">Подробнее</span></button>
     <span class="header-flag" id="headerFlag"></span>
     <span id="headerCountryName"></span>
   </div>
@@ -323,14 +302,6 @@ body { font-family:'Manrope',sans-serif; background:var(--bg); color:var(--text)
 </div>
 
 <div class="welcome" id="welcomeText"></div>
-
-<div class="discount-banner">
-  <div class="discount-left">
-    <div class="discount-pct">-30%</div>
-    <div class="discount-desc" id="discountDesc">Скидка на все продукты при регистрации</div>
-  </div>
-  <button class="discount-btn" id="discountBtn" onclick="openBotLink('https://t.me/Verteratkmbot?start=start')">Получить скидку</button>
-</div>
 
 <div class="search-wrap">
   <input class="search-input" type="text" id="searchInput" oninput="filterProducts()">
@@ -372,6 +343,10 @@ body { font-family:'Manrope',sans-serif; background:var(--bg); color:var(--text)
       <div class="info-block">
         <div class="info-label" id="labelComposition">Состав</div>
         <div class="info-val" id="modalComposition"></div>
+      </div>
+      <div class="reviews-block">
+        <div class="reviews-label" id="reviewsLabel">Отзывы</div>
+        <div id="modalReviews"></div>
       </div>
       <div class="more-info-wrap"><button class="more-info-btn" id="moreInfoModalBtn" onclick="">ℹ️ Подробнее</button></div>
     </div>
@@ -429,7 +404,7 @@ const PRODUCTS = [
       tk:'Miweli pýure we deňiz ösümlikleriniň hidrogeline esaslanýan funksiýa iýmiti. Immuniteti güýçlendirýär we doly iýmiti çalşyp biler.',
       uz:"Meva pyuresi va dengiz o'tlari hidrogeli asosidagi funktsional ovqat. Immunitetni qo'llab-quvvatlaydi, to'liq ovqatni almashtira oladi."
     },
-    composition:{ru:'Фруктовое пюре, гидролизат ламинарии и фукуса (PLASMA), соки, экстракты (эхинацея, солодка), дигидрокверцетин', tk:'Miweli pýure, laminariýa we fukus hidrolizaty (PLASMA), şireler, ekstraktlar (ehinaseýa, mäşebenlik), digidrokersetin', uz:"Meva pyuresi, laminaria va fukus gidrolizati (PLASMA), sharbatlar, ekstraktlar (exinaseya, miya o'ti), digidrokvertsetin"},
+    composition:'Фруктовое пюре, гидролизат ламинарии и фукуса (PLASMA), соки, экстракты (эхинацея, солодка), дигидрокверцетин',
     img:'IMG_0' },
   { id:2, name:'Vertera Gel', cat:'gel',
     prices:{ TKM:'640 манат', UZB:'480.000 сум' },
@@ -439,7 +414,7 @@ const PRODUCTS = [
       tk:'Detoks we gomeostazy dikeltmek üçin esasy önüm. Ýod, witaminler we aminokislotalaryň çeşmesi.',
       uz:"Detoks va gomeostazni tiklash uchun asosiy mahsulot. Yod, vitaminlar va aminokislotalar manbai."
     },
-    composition:{ru:'Вода, ламинария', tk:'Suw, laminariýa', uz:"Suv, laminaria"},
+    composition:'Вода, ламинария',
     img:'IMG_1' },
   { id:3, name:'Vertera Forte Original', cat:'gel',
     prices:{ TKM:'640 манат', UZB:'480.000 сум' },
@@ -449,7 +424,7 @@ const PRODUCTS = [
       tk:'Detoks we antioksidant gorag üçin önüm. Immuniteti goldaýar we garramagy haýalladýar.',
       uz:"Detoks va antioksidant himoya uchun mahsulot. Immunitetni qo'llab-quvvatlaydi."
     },
-    composition:{ru:'Вода, ламинария, фукус, дигидрокверцетин', tk:'Suw, laminariýa, fukus, digidrokersetin', uz:"Suv, laminaria, fukus, digidrokvertsetin"},
+    composition:'Вода, ламинария, фукус, дигидрокверцетин',
     img:'IMG_2' },
   { id:4, name:'Vertera Forte Apple', cat:'gel',
     prices:{ TKM:'640 манат', UZB:'480.000 сум' },
@@ -459,7 +434,7 @@ const PRODUCTS = [
       tk:'Miwe düzümli we adaptogenli güýçlendirilen Forte formulasy. Energiýany we stres durnuklylygyny ýokarlandyrýar.',
       uz:"Meva tarkibli va adaptogenli kuchaytirilgan Forte formulasi. Energiya va stress chidamliligini oshiradi."
     },
-    composition:{ru:'Ламинария, фукус, фруктовые соки, экстракты растений, дигидрокверцетин', tk:'Laminariýa, fukus, miweli şireler, ösümlik ekstraktlary, digidrokersetin', uz:"Laminaria, fukus, meva sharbatlari, o'simlik ekstraktlari, digidrokvertsetin"},
+    composition:'Ламинария, фукус, фруктовые соки, экстракты растений, дигидрокверцетин',
     img:'IMG_3' },
   { id:5, name:'AngioLive Original', cat:'gel',
     prices:{ TKM:'640 манат', UZB:'480.000 сум' },
@@ -469,7 +444,7 @@ const PRODUCTS = [
       tk:'Gan damarlary we bagyr üçin önüm. Ganyň ýagdaýyny gowulandyrýar we damar ulgamyny güýçlendirýär.',
       uz:"Qon tomirlar va jigar uchun mahsulot. Qon holatini yaxshilaydi va tomir tizimini mustahkamlaydi."
     },
-    composition:{ru:'Вода, ламинария, фукус, экстракт листа винограда', tk:'Suw, laminariýa, fukus, üzüm ýapragy ekstrakty', uz:"Suv, laminaria, fukus, uzum bargi ekstrakti"},
+    composition:'Вода, ламинария, фукус, экстракт листа винограда',
     img:'IMG_4' },
   { id:6, name:'AngioLive Apple', cat:'gel',
     prices:{ TKM:'640 манат', UZB:'480.000 сум' },
@@ -479,7 +454,7 @@ const PRODUCTS = [
       tk:'Ýakymly tagamly damarlar üçin funksiýa iýmiti. Mikrosirkulýasiýany goldamak we detoks.',
       uz:"Yoqimli ta'mli tomirlar uchun funktsional ovqat. Mikrosirkulyatsiyani qo'llab-quvvatlash va detoks."
     },
-    composition:{ru:'Ламинария, фукус, фруктовые компоненты, экстракт винограда', tk:'Laminariýa, fukus, miweli düzümler, üzüm ekstrakty', uz:"Laminaria, fukus, meva tarkiblari, uzum ekstrakti"},
+    composition:'Ламинария, фукус, фруктовые компоненты, экстракт винограда',
     img:'IMG_5' },
   { id:7, name:'ArtroPlast', cat:'gel',
     prices:{ TKM:'810 манат', UZB:'600.000 сум' },
@@ -489,7 +464,7 @@ const PRODUCTS = [
       tk:'Bogunlar, baglamlar we kıkırdak üçin önüm. Hereketi gowulandyrýar we dokumalaryň dikelmegine kömek edýär.',
       uz:"Bo'g'imlar, boylamlar va tog'aylar uchun mahsulot. Harakatni yaxshilaydi va to'qimalar tiklanishiga yordam beradi."
     },
-    composition:{ru:'Ламинария, глюкозамин, хондроитин, экстракты растений', tk:'Laminariýa, glükozamin, hondroitin, ösümlik ekstraktlary', uz:"Laminaria, glyukozamin, xondroitin, o'simlik ekstraktlari"},
+    composition:'Ламинария, глюкозамин, хондроитин, экстракты растений',
     img:'IMG_6' },
   { id:8, name:'Plasma Therapy', cat:'cosm',
     prices:{ TKM:'4200 манат', UZB:'3.800.000 сум' },
@@ -499,7 +474,7 @@ const PRODUCTS = [
       tk:'PLASMA® we ekzosomlara esaslanýan innowasiýon kosmetika hatary. Derini ýaşaldýar, mikrobiomy dikeldýär we kolagen öndürmegini höweslendirýär.',
       uz:"PLASMA® va egzosomalar asosidagi innovatsion kosmetika liniyasi. Terini yoshartadi, mikrobiomni tiklaydi va kollagen ishlab chiqarishni rag'batlantiradi."
     },
-    composition:{ru:'PLASMA водорослей, аминокислоты, витамины, экзосомы водорослей', tk:'Suw ösümligi PLASMA-sy, aminokislotalar, witaminler, suw ösümligi ekzosomalary', uz:"Suv o'tlari PLASMA-si, aminokislotalar, vitaminlar, suv o'tlari egzosomалари"},
+    composition:'PLASMA водорослей, аминокислоты, витамины, экзосомы водорослей',
     img:'IMG_7' },
   { id:9, name:'Биомаска для лица', cat:'cosm',
     prices:{ TKM:'325 манат', UZB:'240.000 сум' },
@@ -509,7 +484,7 @@ const PRODUCTS = [
       tk:'Ýüz üçin çuňňur ideg: arassalamak, nemlemek we dikeltmek.',
       uz:"Yuz terisi uchun intensiv parvarish: tozalash, namlantirish va tiklash."
     },
-    composition:{ru:'PLASMA водорослей, биоактивные компоненты', tk:'Suw ösümligi PLASMA-sy, bioaktiw düzümler', uz:"Suv o'tlari PLASMA-si, bioaktiv tarkiblar"},
+    composition:'PLASMA водорослей, биоактивные компоненты',
     img:'IMG_8' },
   { id:10, name:'Масло для тела', cat:'cosm',
     prices:{ TKM:'640 манат', UZB:'480.000 сум' },
@@ -519,7 +494,7 @@ const PRODUCTS = [
       tk:'Derini iýmitlendirýär we dikeldýär, elastikliligi artdyrýar.',
       uz:"Terini oziqlantiradi va tiklaydi, elastikligini oshiradi."
     },
-    composition:{ru:'Натуральные масла + компоненты водорослей', tk:'Tebigy ýaglar + suw ösümligi düzümleri', uz:"Tabiiy yog'lar + suv o'tlari tarkiblari"},
+    composition:'Натуральные масла + компоненты водорослей',
     img:'IMG_9' },
   { id:11, name:'Thalasso Spa Gel', cat:'cosm',
     prices:{ TKM:'640 манат', UZB:'480.000 сум' },
@@ -529,7 +504,7 @@ const PRODUCTS = [
       tk:'Bedeni rahatlandyrýan gel. Uka gitmezden ozal idealdyr: dartgynlygy aýyrýar we derini dikeldýär.',
       uz:"Tanani bo'shaduvchi gel. Uxlashdan oldin ideal: taranglikni olib tashlaydi va terini tiklaydi."
     },
-    composition:{ru:'Водоросли, минералы, активные био-компоненты', tk:'Suw ösümlikleri, minerallar, işjeň bio-düzümler', uz:"Suv o'tlari, minerallar, faol bio-tarkiblar"},
+    composition:'Водоросли, минералы, активные био-компоненты',
     img:'IMG_10' },
   { id:12, name:'Hydrate Collagen', cat:'cosm',
     prices:{ TKM:'810 манат', UZB:'600.000 сум' },
@@ -539,7 +514,7 @@ const PRODUCTS = [
       tk:'Göteriji täsiri bilen nemlediji önüm. Kollagen sintezini goldaýar we deri tonusyny gowulandyrýar.',
       uz:"Ko'tarish ta'siriga ega namlantiruvchi mahsulot. Kollagen sintezini qo'llab-quvvatlaydi va teri tonusini yaxshilaydi."
     },
-    composition:{ru:'Коллаген пресноводной рыбы, ионы серебра', tk:'Süýdemsiz balyk kollageni, kümüş ionlary', uz:"Chuchuk baliq kollageni, kumush ionlari"},
+    composition:'Коллаген пресноводной рыбы, ионы серебра',
     img:'IMG_11' }
 ];
 
@@ -606,17 +581,6 @@ function initApp() {
   document.getElementById('welcomeText').textContent = t('welcome');
   document.getElementById('searchInput').placeholder = t('search');
   document.getElementById('footerText').textContent = t('footerText');
-  // Баннер скидки
-  const discountDescs = {
-    ru: 'Скидка на все продукты Vertera при регистрации личного кабинета',
-    tk: 'Şahsy kabineti hasaba aldyranyňyzda ähli Vertera önümlerine arzanladyş',
-    uz: "Shaxsiy kabinetni ro'yxatdan o'tkazganingizda barcha Vertera mahsulotlariga chegirma",
-  };
-  const discountBtns = {ru:'Получить скидку', tk:'Arzanladyş almak', uz:"Chegirma olish"};
-  const headerMoreLabels = {ru:'Подробнее', tk:'Giňişleýin', uz:'Batafsil'};
-  document.getElementById('discountDesc').textContent = discountDescs[LANG] || discountDescs.ru;
-  document.getElementById('discountBtn').textContent = discountBtns[LANG] || discountBtns.ru;
-  document.getElementById('headerMoreLabel').textContent = headerMoreLabels[LANG] || headerMoreLabels.ru;
   document.getElementById('footerPhone').textContent = phone;
   document.getElementById('footerPhone').href = 'tel:'+phone;
   document.getElementById('labelVolume').textContent = t('volume');
@@ -718,6 +682,49 @@ function makeProductStartParam(product) {
   return encodeURIComponent(`product_${product.id}__${cleanName}`);
 }
 
+
+// ── ОТЗЫВЫ ─────────────────────────────────────
+const REVIEWS = {
+  1:  [{ name:"Айгүл М.", ru:"Дочке 5 лет, ест с удовольствием каждый день! Иммунитет заметно улучшился.", tk:"Gyzyma 5 ýaş — her gün höwes bilen iýýär! Immuniteti görnetin gowulaşdy.", uz:"Qizim 5 yoshda — har kuni ishtaha bilan yeydi! Immuniteti sezilarli yaxshilandi." },
+       { name:"Сердар Х.", ru:"Умный ребёнок — спасение для нашей семьи. Очень удобный формат питания.", tk:"Akylly çaga — biziň maşgalamyz üçin halas ediji. Iýmit formaty gaty amatly.", uz:"Aqlli bola — bizning oila uchun qutqaruvchi. Juda qulay oziq-ovqat formati." }],
+  2:  [{ name:"Гуля Б.", ru:"Пью Vertera Gel уже 3 месяца. Энергии больше, пищеварение улучшилось.", tk:"Vertera Gel-i 3 aý içýärin. Energiýam artdy, iýmit siňdirişim gowulaşdy.", uz:"Vertera Gelni 3 oydan beri ichaman. Energiya ko'paydi, hazm qilish yaxshilandi." },
+       { name:"Мерген Т.", ru:"Отличный продукт! Чувствую лёгкость и бодрость каждое утро.", tk:"Ajaýyp önüm! Her ertir ýeňillik we şähdaçıklyk duýýaryn.", uz:"Ajoyib mahsulot! Har ertalab yengillik va tetiklik his qilaman." }],
+  3:  [{ name:"Лейла А.", ru:"Vertera Forte — вкусно и полезно! Заряд энергии с самого утра.", tk:"Vertera Forte — tagamly we peýdaly! Irden energiýa zarýady.", uz:"Vertera Forte — mazali va foydali! Ertalabdan energiya zaryadi." },
+       { name:"Зухра Р.", ru:"Со вкусом яблока — любимый продукт всей семьи. Рекомендую!", tk:"Alma tagamy — tutuş maşgalamyzyň söýgüli önümi. Maslahat berýärin!", uz:"Olma ta'mi — butun oilaning sevimli mahsuloti. Tavsiya qilaman!" }],
+  4:  [{ name:"Ходжа С.", ru:"AngioLive помог стабилизировать давление. Чувствую себя намного лучше!", tk:"AngioLive basyşy durnuklaşdyrmaga kömek etdi. Özümi has gowy duýýaryn!", uz:"AngioLive bosimni barqarorlashtirishga yordam berdi. O'zimni ancha yaxshi sezaman!" },
+       { name:"Санем О.", ru:"Отличный продукт для здоровья сосудов. Заметила улучшение через 3 недели.", tk:"Damar saglygyna ajaýyp önüm. 3 hepdeden soň gowulaşma bildim.", uz:"Qon tomir sog'ligi uchun ajoyib mahsulot. 3 haftadan keyin yaxshilanishni sezdim." }],
+  5:  [{ name:"Нурлан К.", ru:"ArtroPlast помог с болью в суставах. Через 6 недель хожу без дискомфорта.", tk:"ArtroPlast bogun agyrysyna kömek etdi. 6 hepdeden soň rahatlyk bilen ýöreýärin.", uz:"ArtroPlast bo'g'im og'rig'iga yordam berdi. 6 haftadan keyin qulay yuraman." },
+       { name:"Дильноза У.", ru:"Суставы стали работать лучше. Очень рада что нашла этот продукт!", tk:"Bogunlar has gowy işleýär. Bu önümi tapandygyma gaty begenýärin!", uz:"Bo'g'imlar yaxshiroq ishlayapti. Bu mahsulotni topganimdan juda xursandman!" }],
+  6:  [{ name:"Батыр Д.", ru:"AngioLive Apple — приятный вкус и реальный эффект. Сосуды стали лучше.", tk:"AngioLive Apple — ýakymly tagam we hakyky täsir. Damarlar gowulaşdy.", uz:"AngioLive Apple — yoqimli ta'm va haqiqiy ta'sir. Tomirlar yaxshilandi." },
+       { name:"Ренат В.", ru:"Вкусно, удобно и полезно. Беру постоянно для всей семьи.", tk:"Tagamly, amatly we peýdaly. Tutuş maşgalam üçin hemişe alýaryn.", uz:"Mazali, qulay va foydali. Butun oila uchun doim olib yuraman." }],
+  7:  [{ name:"Айгүл Б.", ru:"Hydrate Collagen — волосы и ногти стали заметно крепче через месяц!", tk:"Hydrate Collagen — bir aýdan soň saçlar we dyrnaklaryň berkligi görnüp dur!", uz:"Hydrate Collagen — bir oydan keyin soch va tirnoqlar sezilarli mustahkamlandi!" },
+       { name:"Лейла С.", ru:"Кожа стала увлажнённой и упругой. Отличный продукт для ухода!", tk:"Deri çyglylykly we berkdi. Ideg üçin ajaýyp önüm!", uz:"Teri namlangan va elastik bo'ldi. Parvarish uchun ajoyib mahsulot!" }],
+  8:  [{ name:"Гуля М.", ru:"Plasma Therapy — потрясающий результат! Кожа помолодела за 4 недели.", tk:"Plasma Therapy — haýran galdyryjy netije! Deri 4 hepdede ýaşardy.", uz:"Plasma Therapy — ajoyib natija! Teri 4 haftada yoshardi." },
+       { name:"Санем Т.", ru:"Инновационная линия, реально работает. Рекомендую всем женщинам!", tk:"Innowasiýon hatar, hakykatdan işleýär. Ähli aýallara maslahat berýärin!", uz:"Innovatsion liniya, haqiqatan ishlaydi. Barcha ayollarga tavsiya qilaman!" }],
+  9:  [{ name:"Зухра А.", ru:"Биомаска — результат виден с первого применения. Кожа свежая и мягкая.", tk:"Biomaska — ilkinji ulanylyşdan netije görünýär. Deri täze we näzik.", uz:"Biomaska — birinchi qo'llashdan natija ko'rinadi. Teri yangi va yumshoq." },
+       { name:"Айгүл Х.", ru:"Использую каждую неделю. Лицо выглядит на 5 лет моложе!", tk:"Her hepde ulanýaryn. Ýüz 5 ýaş ýaşly görünýär!", uz:"Har hafta ishlataman. Yuz 5 yosh yoshroq ko'rinadi!" }],
+  10: [{ name:"Мерген А.", ru:"Масло для тела очень приятное. Кожа увлажнена весь день, запах натуральный.", tk:"Beden ýagy gaty ýakymly. Deri bütin gün çyglylykly, tagam tebigy.", uz:"Tana yog'i juda yoqimli. Teri kun bo'yi namli, hid tabiiy." },
+       { name:"Гуля С.", ru:"Наношу после душа — кожа шелковистая. Стала любимым средством ухода!", tk:"Duşdan soň çalýaryn — deri ýüpekli. Ideg üçin söýgüli serişdä öwrüldi!", uz:"Dushdan keyin surkaman — teri ipakdek. Parvarishning sevimli vositasiga aylandi!" }],
+  11: [{ name:"Ходжа М.", ru:"Thalasso Spa Gel расслабляет после тяжёлого дня. Сплю намного лучше.", tk:"Thalasso Spa Gel — agyr günden soň rahatlandyrýar. Ukym has gowy.", uz:"Thalasso Spa Gel og'ir kundan keyin bo'shashtiradi. Uyqum ancha yaxshilandi." },
+       { name:"Нурлан Б.", ru:"Отличное средство для обёртываний. Кожа подтянулась и стала упругой.", tk:"Örtgüçler üçin ajaýyp serişde. Deri çekildi we berk boldy.", uz:"O'rovlar uchun ajoyib vosita. Teri tortildi va elastik bo'ldi." }],
+  12: [{ name:"Гуля М.", ru:"Hydrate Collagen — кожа стала заметно более упругой и увлажнённой!", tk:"Hydrate Collagen — deri has çeýe we çygly boldy!", uz:"Hydrate Collagen — teri sezilarli elastik va namlangan bo'ldi!" },
+       { name:"Санем Т.", ru:"Укрепляет волосы и придаёт блеск. Пользуюсь уже полгода — эффект отличный!", tk:"Saçlary berkidýär we ýalpyldawuklyk berýär. 6 aý bäri ulanýaryn — netije ajaýyp!", uz:"Sochlarga mustahkamlik va porloqlik beradi. Yarim yildan beri ishlataman — natija zo'r!" }],
+};
+
+function renderReviews(productId) {
+  const reviews = REVIEWS[productId] || [];
+  const label = {ru:"Отзывы", tk:"Teswirler", uz:"Sharhlar"}[LANG] || "Отзывы";
+  document.getElementById("reviewsLabel").textContent = label;
+  document.getElementById("modalReviews").innerHTML = reviews.map(r => `
+    <div class="review-card">
+      <div class="review-header">
+        <span class="review-name">${r.name}</span>
+        <span class="review-stars">★★★★★</span>
+      </div>
+      <div class="review-text">${r[LANG] || r.ru}</div>
+    </div>`).join("");
+}
+
 function openModal(id) {
   const p = PRODUCTS.find(x => x.id === id);
   const desc = p.desc[LANG] || p.desc.ru;
@@ -726,7 +733,7 @@ function openModal(id) {
   document.getElementById('modalPrice').textContent = p.prices[COUNTRY];
   document.getElementById('modalDesc').textContent = desc;
   document.getElementById('modalVolume').textContent = p.volume;
-  document.getElementById('modalComposition').textContent = typeof p.composition === 'object' ? (p.composition[LANG] || p.composition.ru) : p.composition;
+  document.getElementById('modalComposition').textContent = p.composition;
 
   // Кнопка "Подробнее" в карточке — отправляет название товара в бот
   const moreInfoModalBtn = document.getElementById('moreInfoModalBtn');
@@ -740,6 +747,7 @@ function openModal(id) {
     };
   }
 
+  renderReviews(p.id);
   document.getElementById('modalScroll').scrollTop = 0;
   document.getElementById('modal').classList.add('open');
   document.getElementById('overlay').classList.add('visible');
