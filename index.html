@@ -101,6 +101,26 @@ body { font-family:'Manrope',sans-serif; background:var(--bg); color:var(--text)
 .header-flag { font-size:14px; }
 
 /* WELCOME */
+.discount-banner {
+  margin:10px 16px 0;
+  background:linear-gradient(135deg,#829e6f,#4a6b3a);
+  border-radius:var(--radius);
+  padding:14px 16px;
+  display:flex; align-items:center; justify-content:space-between; gap:10px;
+}
+.discount-left { flex:1; }
+.discount-pct { font-family:'Unbounded',sans-serif; font-size:28px; font-weight:700; color:#fff; line-height:1; margin-bottom:2px; }
+.discount-desc { font-size:11px; color:rgba(255,255,255,.85); line-height:1.4; }
+.discount-btn { flex-shrink:0; padding:10px 14px; background:#fff; border:none; border-radius:12px; color:#4a6b3a; font-family:'Unbounded',sans-serif; font-size:10px; font-weight:700; cursor:pointer; transition:opacity .2s; white-space:nowrap; }
+.discount-btn:active { opacity:.85; }
+.header-more-btn { flex-shrink:0; padding:5px 10px; background:rgba(255,255,255,.15); border:1px solid rgba(255,255,255,.3); border-radius:10px; color:#fff; font-size:11px; font-weight:600; cursor:pointer; white-space:nowrap; }
+.reviews-block { padding:14px 0 6px; }
+.reviews-label { font-size:10px; font-weight:700; color:var(--subtext); letter-spacing:1px; text-transform:uppercase; margin-bottom:10px; }
+.review-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:12px 14px; margin-bottom:8px; }
+.review-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:5px; }
+.review-name { font-size:12px; font-weight:600; }
+.review-stars { color:#f4b942; font-size:12px; }
+.review-text { font-size:12px; color:#a8c8a8; line-height:1.5; }
 .welcome {
   margin:12px 16px 0;
   background:linear-gradient(135deg,#2f4a3c,#3a5e4a);
@@ -230,13 +250,6 @@ body { font-family:'Manrope',sans-serif; background:var(--bg); color:var(--text)
 }
 .top-lang-item:active, .top-lang-item.active { background:rgba(130,158,111,.15); }
 
-.reviews-block { padding: 14px 0 6px; }
-.reviews-label { font-size:10px; font-weight:700; color:var(--subtext); letter-spacing:1px; text-transform:uppercase; margin-bottom:10px; }
-.review-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:12px 14px; margin-bottom:8px; }
-.review-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:5px; }
-.review-name { font-size:12px; font-weight:600; }
-.review-stars { color:#f4b942; font-size:12px; }
-.review-text { font-size:12px; color:#a8c8a8; line-height:1.5; }
 .more-info-wrap { padding: 4px 20px 0; }
 .more-info-btn {
   width:100%; margin-top:18px;
@@ -284,6 +297,7 @@ body { font-family:'Manrope',sans-serif; background:var(--bg); color:var(--text)
     <text x="0" y="28" font-family="'Unbounded', sans-serif" font-size="28" font-weight="700" fill="white" letter-spacing="6">VERTERA</text>
   </svg>
   <div class="header-info">
+    <button class="header-more-btn" onclick="openBotLink('https://t.me/Verteratkmbot?start=start')">ℹ️ <span id="headerMoreLabel">Подробнее</span></button>
     <span class="header-flag" id="headerFlag"></span>
     <span id="headerCountryName"></span>
   </div>
@@ -302,6 +316,14 @@ body { font-family:'Manrope',sans-serif; background:var(--bg); color:var(--text)
 </div>
 
 <div class="welcome" id="welcomeText"></div>
+
+<div class="discount-banner">
+  <div class="discount-left">
+    <div class="discount-pct">-30%</div>
+    <div class="discount-desc" id="discountDesc">Скидка на все продукты при регистрации</div>
+  </div>
+  <button class="discount-btn" id="discountBtn" onclick="openBotLink('https://t.me/Verteratkmbot?start=start')">Получить скидку</button>
+</div>
 
 <div class="search-wrap">
   <input class="search-input" type="text" id="searchInput" oninput="filterProducts()">
@@ -581,6 +603,12 @@ function initApp() {
   document.getElementById('welcomeText').textContent = t('welcome');
   document.getElementById('searchInput').placeholder = t('search');
   document.getElementById('footerText').textContent = t('footerText');
+  const _dd = {ru:'Скидка на все продукты Vertera при регистрации', tk:'Şahsy kabineti hasaba aldyranyňyzda ähli önümlere arzanladyş', uz:"Shaxsiy kabinetni ro'yxatdan o'tkazganingizda barcha mahsulotlarga chegirma"};
+  const _db = {ru:'Получить скидку', tk:'Arzanladyş almak', uz:'Chegirma olish'};
+  const _hm = {ru:'Подробнее', tk:'Giňişleýin', uz:'Batafsil'};
+  if(document.getElementById('discountDesc')) document.getElementById('discountDesc').textContent = _dd[LANG]||_dd.ru;
+  if(document.getElementById('discountBtn')) document.getElementById('discountBtn').textContent = _db[LANG]||_db.ru;
+  if(document.getElementById('headerMoreLabel')) document.getElementById('headerMoreLabel').textContent = _hm[LANG]||_hm.ru;
   document.getElementById('footerPhone').textContent = phone;
   document.getElementById('footerPhone').href = 'tel:'+phone;
   document.getElementById('labelVolume').textContent = t('volume');
@@ -683,7 +711,6 @@ function makeProductStartParam(product) {
 }
 
 
-// ── ОТЗЫВЫ ─────────────────────────────────────
 const REVIEWS = {
   1:  [{ name:"Айгүл М.", ru:"Дочке 5 лет, ест с удовольствием каждый день! Иммунитет заметно улучшился.", tk:"Gyzyma 5 ýaş — her gün höwes bilen iýýär! Immuniteti görnetin gowulaşdy.", uz:"Qizim 5 yoshda — har kuni ishtaha bilan yeydi! Immuniteti sezilarli yaxshilandi." },
        { name:"Сердар Х.", ru:"Умный ребёнок — спасение для нашей семьи. Очень удобный формат питания.", tk:"Akylly çaga — biziň maşgalamyz üçin halas ediji. Iýmit formaty gaty amatly.", uz:"Aqlli bola — bizning oila uchun qutqaruvchi. Juda qulay oziq-ovqat formati." }],
