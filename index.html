@@ -113,6 +113,8 @@ body { font-family:'Manrope',sans-serif; background:var(--bg); color:var(--text)
 .discount-desc { font-size:11px; color:rgba(255,255,255,.85); line-height:1.4; }
 .discount-btn { flex-shrink:0; padding:10px 14px; background:#fff; border:none; border-radius:12px; color:#4a6b3a; font-family:'Unbounded',sans-serif; font-size:10px; font-weight:700; cursor:pointer; transition:opacity .2s; white-space:nowrap; }
 .discount-btn:active { opacity:.85; }
+.partner-btn { display:block; width:100%; margin:8px 0 0; padding:11px; background:transparent; border:2px solid #4a6b3a; border-radius:14px; color:#4a6b3a; font-family:'Unbounded',sans-serif; font-size:11px; font-weight:700; cursor:pointer; transition:all .2s; text-align:center; }
+.partner-btn:active { background:#4a6b3a; color:#fff; }
 .header-more-btn { flex-shrink:0; padding:5px 10px; background:rgba(255,255,255,.15); border:1px solid rgba(255,255,255,.3); border-radius:10px; color:#fff; font-size:11px; font-weight:600; cursor:pointer; white-space:nowrap; }
 .reviews-block { padding:14px 0 6px; }
 .reviews-label { font-size:10px; font-weight:700; color:var(--subtext); letter-spacing:1px; text-transform:uppercase; margin-bottom:10px; }
@@ -324,6 +326,7 @@ body { font-family:'Manrope',sans-serif; background:var(--bg); color:var(--text)
   </div>
   <button class="discount-btn" id="discountBtn" onclick="openBotLink('https://t.me/Verteratkmbot?start=start')">Получить скидку</button>
 </div>
+<button class="partner-btn" id="partnerBtn" onclick="openBotLink('https://t.me/Verteratkmbot?start=partner')">🤝 Я партнёр</button>
 
 <div class="search-wrap">
   <input class="search-input" type="text" id="searchInput" oninput="filterProducts()">
@@ -631,6 +634,8 @@ function initApp() {
   const _hm = {ru:'Подробнее', tk:'Giňişleýin', uz:'Batafsil'};
   if(document.getElementById('discountDesc')) document.getElementById('discountDesc').textContent = _dd[LANG]||_dd.ru;
   if(document.getElementById('discountBtn')) document.getElementById('discountBtn').textContent = _db[LANG]||_db.ru;
+  const _pb = {ru:'🤝 Я партнёр', tk:'🤝 Men hyzmatdaş', uz:"🤝 Men hamkorman"};
+  if(document.getElementById('partnerBtn')) document.getElementById('partnerBtn').textContent = _pb[LANG]||_pb.ru;
   if(document.getElementById('headerMoreLabel')) document.getElementById('headerMoreLabel').textContent = _hm[LANG]||_hm.ru;
   document.getElementById('footerPhone').textContent = phone;
   document.getElementById('footerPhone').href = 'tel:'+phone;
