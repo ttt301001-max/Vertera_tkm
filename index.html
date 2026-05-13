@@ -40,8 +40,9 @@ body { font-family:'Manrope',sans-serif; background:var(--bg); color:var(--text)
   text-transform:uppercase; margin-bottom:48px;
 }
 .splash-title {
-  font-size:14px; color:var(--subtext); margin-bottom:20px;
-  text-align:center;
+  font-size:26px; font-weight:900; color:var(--text);
+  margin-bottom:20px; text-align:center;
+  letter-spacing:-0.5px; text-transform:uppercase;
 }
 .country-btns {
   display:flex; gap:12px; width:100%; max-width:320px; margin-bottom:32px;
@@ -422,145 +423,145 @@ const PRODUCTS = [
     prices:{ TKM:'40 манат', UZB:'40.000 сум' },
     volume:'Пауч ~100–120 г',
     desc:{
-      ru:'Функциональное питание на основе фруктового пюре и гидрогеля морских водорослей PLASMA®. Поддерживает иммунитет ребёнка, обеспечивает клеточное питание, нормализует пищеварение. Содержит 140+ биологически активных веществ. Может заменять полноценный приём пищи.',
-      tk:'PLASMA® deňiz ösümlikleriniň hidrogeli we miweli pýure esasynda taýýarlanan funksiýa iýmiti. Çaganyň immunitetini goldaýar, öýjük iýmitini üpjün edýär. 140+ bioaktiw madda. Doly iýmiti çalşyp biler.',
-      uz:"PLASMA® dengiz o'tlari hidrogeli va meva pyuresi asosidagi funktsional ovqat. Bolaning immunitetini qo'llab-quvvatlaydi, hujayra ovqatlanishini ta'minlaydi. 140+ bioaktiv modda. To'liq ovqatni almashtira oladi."
+      ru:'Функциональное питание на основе фруктового пюре и гидрогеля морских водорослей. Поддерживает иммунитет, обеспечивает клеточное питание и может заменять полноценный приём пищи.',
+      tk:'Miweli pýure we deňiz ösümlikleriniň hidrogeline esaslanýan funksiýa iýmiti. Immuniteti güýçlendirýär we doly iýmiti çalşyp biler.',
+      uz:"Meva pyuresi va dengiz o'tlari hidrogeli asosidagi funktsional ovqat. Immunitetni qo'llab-quvvatlaydi, to'liq ovqatni almashtira oladi."
     },
-    composition:'Фруктовое пюре (яблоко, банан, смородина), гидролизат ламинарии и фукуса (PLASMA®), натуральные соки, экстракт эхинацеи, экстракт солодки, дигидрокверцетин, витамин С',
+    composition:'Фруктовое пюре, гидролизат ламинарии и фукуса (PLASMA), соки, экстракты (эхинацея, солодка), дигидрокверцетин',
     img:'IMG_0' },
   { id:2, name:'Vertera Gel', cat:'gel',
     prices:{ TKM:'640 манат', UZB:'480.000 сум' },
     volume:'~500 г',
     desc:{
-      ru:'Базовый продукт Vertera для детокса, восстановления гомеостаза и укрепления иммунитета. Натуральный гидрогель из морских водорослей с высокой биодоступностью. Богат йодом, минералами, витаминами и аминокислотами. Нормализует работу кишечника, выводит токсины.',
-      tk:'Detoks, gomeostazy dikeltmek we immuniteti güýçlendirmek üçin Verteranyň esasy önümi. Deňiz ösümliklerinden ýokary biologik elýeterliligi bolan tebigy hidrogel. Ýod, minerallar, witaminler we aminokislotalara baý. Içegäniň işini kadalaşdyrýar.',
-      uz:"Detoks, gomeostazni tiklash va immunitetni mustahkamlash uchun Verteraning asosiy mahsuloti. Dengiz o'tlaridan yuqori biologik faollikka ega tabiiy hidrogel. Yod, minerallar, vitaminlar va aminokislotalar bilan boy. Ichak ishini normallashtiradi."
+      ru:'Базовый продукт для детокса и восстановления гомеостаза. Источник йода, витаминов и аминокислот с высокой биодоступностью.',
+      tk:'Detoks we gomeostazy dikeltmek üçin esasy önüm. Ýod, witaminler we aminokislotalaryň çeşmesi.',
+      uz:"Detoks va gomeostazni tiklash uchun asosiy mahsulot. Yod, vitaminlar va aminokislotalar manbai."
     },
-    composition:'Вода очищенная, ламинария сахаристая (Laminaria saccharina) — не менее 15%',
+    composition:'Вода, ламинария',
     img:'IMG_1' },
   { id:3, name:'Vertera Forte Original', cat:'gel',
     prices:{ TKM:'640 манат', UZB:'480.000 сум' },
     volume:'~500 г',
     desc:{
-      ru:'Усиленная формула Vertera Gel с добавлением фукуса и дигидрокверцетина. Мощный антиоксидантный и детоксирующий эффект. Замедляет процессы старения, укрепляет иммунитет, нормализует обмен веществ и поддерживает здоровье щитовидной железы.',
-      tk:'Fukus we digidrokwersetin goşulan güýçlendirilen Vertera Gel formulasy. Güýçli antioksidant we detoks täsiri. Garramany haýalladýar, immuniteti berkidýär, madde alyş-çalyşyny kadalaşdyrýar.',
-      uz:"Fukus va digidrokvetsetin qo'shilgan kuchaytirilgan Vertera Gel formulasi. Kuchli antioksidant va detoks ta'siri. Qarishni sekinlashtiradi, immunitetni mustahkamlaydi, moddalar almashinuvini normallashtiradi."
+      ru:'Продукт для детокса и антиоксидантной защиты. Поддерживает иммунитет и замедляет процессы старения.',
+      tk:'Detoks we antioksidant gorag üçin önüm. Immuniteti goldaýar we garramagy haýalladýar.',
+      uz:"Detoks va antioksidant himoya uchun mahsulot. Immunitetni qo'llab-quvvatlaydi."
     },
-    composition:'Вода очищенная, ламинария, фукус пузырчатый (Fucus vesiculosus), дигидрокверцетин',
+    composition:'Вода, ламинария, фукус, дигидрокверцетин',
     img:'IMG_2' },
   { id:4, name:'Vertera Forte Apple', cat:'gel',
     prices:{ TKM:'640 манат', UZB:'480.000 сум' },
     volume:'~500 г',
     desc:{
-      ru:'Vertera Forte с фруктовыми компонентами и растительными адаптогенами. Повышает жизненный тонус и устойчивость к стрессу. Поддерживает энергетический обмен, укрепляет иммунитет. Приятный вкус яблока — легко принимать каждый день.',
-      tk:'Miwe düzümleri we ösümlik adaptogenleri bolan Vertera Forte. Ýaşaýyş güýjüni we stresse durnuklylygy artdyrýar. Energiýa alyş-çalşyny goldaýar, immuniteti berkidýär. Ýakymly alma tagamy.',
-      uz:"Meva tarkibi va o'simlik adaptogenlari bilan Vertera Forte. Hayotiy tonusni va stress chidamliligini oshiradi. Energiya almashinuvini qo'llab-quvvatlaydi, immunitetni mustahkamlaydi. Yoqimli olma ta'mi."
+      ru:'Усиленная формула Forte с фруктовыми компонентами и адаптогенами. Повышает энергию и устойчивость к стрессу.',
+      tk:'Miwe düzümli we adaptogenli güýçlendirilen Forte formulasy. Energiýany we stres durnuklylygyny ýokarlandyrýar.',
+      uz:"Meva tarkibli va adaptogenli kuchaytirilgan Forte formulasi. Energiya va stress chidamliligini oshiradi."
     },
-    composition:'Ламинария, фукус, яблочное пюре, натуральные фруктовые соки, экстракт элеутерококка, экстракт шиповника, дигидрокверцетин, витамин С',
+    composition:'Ламинария, фукус, фруктовые соки, экстракты растений, дигидрокверцетин',
     img:'IMG_3' },
   { id:5, name:'AngioLive Original', cat:'gel',
     prices:{ TKM:'640 манат', UZB:'480.000 сум' },
     volume:'~500 г',
     desc:{
-      ru:'Специализированный продукт для здоровья сосудов, сердца и печени. Содержит экстракт листьев красного винограда, который укрепляет стенки сосудов, улучшает микроциркуляцию и снижает риск варикозного расширения вен. Помогает при отёках и тяжести в ногах.',
-      tk:'Gan damarlary, ýürek we bagyr saglygy üçin ýöriteleşdirilen önüm. Gyzyl üzüm ýapragynyň ekstrakty damar diwarlaryny berkidýär, mikrosirkulýasiýany gowulandyrýar we warikozy azaldýar. Çişme we aýak agyrlygy bilen kömek edýär.',
-      uz:"Tomir, yurak va jigar salomatligi uchun ixtisoslashgan mahsulot. Qizil uzum yaprog'i ekstrakti tomir devorlarini mustahkamlaydi, mikrosirkulyatsiyani yaxshilaydi va varikoz xavfini kamaytiradi. Shish va oyoqlardagi og'irlikka yordam beradi."
+      ru:'Продукт для поддержки сосудов и печени. Улучшает состояние крови и укрепляет сосудистую систему.',
+      tk:'Gan damarlary we bagyr üçin önüm. Ganyň ýagdaýyny gowulandyrýar we damar ulgamyny güýçlendirýär.',
+      uz:"Qon tomirlar va jigar uchun mahsulot. Qon holatini yaxshilaydi va tomir tizimini mustahkamlaydi."
     },
-    composition:'Вода, ламинария, фукус, экстракт листьев красного винограда (Vitis vinifera)',
+    composition:'Вода, ламинария, фукус, экстракт листа винограда',
     img:'IMG_4' },
   { id:6, name:'AngioLive Apple', cat:'gel',
     prices:{ TKM:'640 манат', UZB:'480.000 сум' },
     volume:'~500 г',
     desc:{
-      ru:'AngioLive с приятным вкусом яблока — все свойства оригинального AngioLive в более приятной форме. Поддерживает здоровье сосудов, улучшает микроциркуляцию, помогает при отёках. Дополнительные фруктовые компоненты усиливают антиоксидантный эффект.',
-      tk:'Ýakymly alma tagamly AngioLive — asyl AngioLive-nyň ähli häsiýetleri has ýakymly görnüşde. Damar saglygyny goldaýar, mikrosirkulýasiýany gowulandyrýar, çişmä kömek edýär.',
-      uz:"Yoqimli olma ta'mli AngioLive — original AngioLivening barcha xususiyatlari yanada yoqimli shaklda. Tomir sog'ligini qo'llab-quvvatlaydi, mikrosirkulyatsiyani yaxshilaydi, shishga yordam beradi."
+      ru:'Функциональное питание для сосудов с приятным вкусом. Поддержка микроциркуляции и детокс.',
+      tk:'Ýakymly tagamly damarlar üçin funksiýa iýmiti. Mikrosirkulýasiýany goldamak we detoks.',
+      uz:"Yoqimli ta'mli tomirlar uchun funktsional ovqat. Mikrosirkulyatsiyani qo'llab-quvvatlash va detoks."
     },
-    composition:'Ламинария, фукус, яблочный сок, экстракт листьев красного винограда, натуральные ароматизаторы, дигидрокверцетин',
+    composition:'Ламинария, фукус, фруктовые компоненты, экстракт винограда',
     img:'IMG_5' },
   { id:7, name:'ArtroPlast', cat:'gel',
     prices:{ TKM:'810 манат', UZB:'600.000 сум' },
     volume:'~500 г',
     desc:{
-      ru:'Продукт для восстановления и поддержки суставов, хрящей и связок. Содержит глюкозамин и хондроитин — строительные материалы хрящевой ткани. Уменьшает боль и воспаление в суставах, улучшает подвижность. Рекомендуется при артрозе, артрите и спортивных нагрузках.',
-      tk:'Bogunlary, kıkırdagy we baglamalary dikeltmek üçin önüm. Glikozamin we hondroitin — kıkırdak dokumasyny gurmak üçin materiallar. Bogunlardaky agyryny we çişmäni azaldýar, hereketi gowulandyrýar.',
-      uz:"Bo'g'imlar, tog'aylar va boylamlarni tiklash uchun mahsulot. Glyukozamin va xondroitin — tog'ay to'qimasining qurilish materiallari. Bo'g'imlardagi og'riq va yallig'lanishni kamaytiradi, harakatni yaxshilaydi."
+      ru:'Продукт для суставов, связок и хрящей. Улучшает подвижность и способствует восстановлению тканей.',
+      tk:'Bogunlar, baglamlar we kıkırdak üçin önüm. Hereketi gowulandyrýar we dokumalaryň dikelmegine kömek edýär.',
+      uz:"Bo'g'imlar, boylamlar va tog'aylar uchun mahsulot. Harakatni yaxshilaydi va to'qimalar tiklanishiga yordam beradi."
     },
-    composition:'Ламинария, глюкозамин гидрохлорид, хондроитина сульфат, экстракт коры ивы, экстракт имбиря, витамин С, марганец',
+    composition:'Ламинария, глюкозамин, хондроитин, экстракты растений',
     img:'IMG_6' },
   { id:8, name:'Plasma Therapy', cat:'cosm',
     prices:{ TKM:'4200 манат', UZB:'3.800.000 сум' },
     volume:'Сыворотка, крем, тоник — 30–130 мл',
     desc:{
-      ru:'Инновационная косметическая линия на основе запатентованного PLASMA® водорослей и растительных экзосом. Активирует регенерацию кожи на клеточном уровне. Омолаживает, восстанавливает микробиом кожи, стимулирует синтез коллагена. Включает сыворотку, крем и тоник.',
-      tk:'Patentlenen PLASMA® ösümlikleri we ösümlik ekzosomlaryna esaslanýan innowasiýon kosmetika hatary. Öýjük derejesinde derini dikeltmegi işjeňleşdirýär. Ýaşaldýar, deri mikrobiomyny dikeldýär, kolagen sintezini höweslendirýär.',
-      uz:"Patentlangan PLASMA® o'simliklari va o'simlik egzosomalari asosidagi innovatsion kosmetika liniyasi. Teri regeneratsiyasini hujayra darajasida faollashtiradi. Yoshartadi, teri mikrobiomini tiklaydi, kollagen sintezini rag'batlantiradi."
+      ru:'Инновационная косметическая линия на основе PLASMA® и экзосом. Омолаживает кожу, восстанавливает микробиом и стимулирует выработку коллагена.',
+      tk:'PLASMA® we ekzosomlara esaslanýan innowasiýon kosmetika hatary. Derini ýaşaldýar, mikrobiomy dikeldýär we kolagen öndürmegini höweslendirýär.',
+      uz:"PLASMA® va egzosomalar asosidagi innovatsion kosmetika liniyasi. Terini yoshartadi, mikrobiomni tiklaydi va kollagen ishlab chiqarishni rag'batlantiradi."
     },
-    composition:'PLASMA® экстракт бурых водорослей, экзосомы ламинарии, гиалуроновая кислота, аминокислоты, витамин B5, пептиды морского коллагена, ионы серебра',
+    composition:'PLASMA водорослей, аминокислоты, витамины, экзосомы водорослей',
     img:'IMG_7' },
   { id:9, name:'Биомаска для лица', cat:'cosm',
     prices:{ TKM:'325 манат', UZB:'240.000 сум' },
     volume:'150 мл',
     desc:{
-      ru:'Интенсивная биомаска для глубокого очищения, увлажнения и восстановления кожи лица. PLASMA® водорослей обеспечивает клеточное питание. Сужает поры, выравнивает тон кожи, убирает мелкие неровности. Подходит для всех типов кожи.',
-      tk:'Ýüz derini çuňňur arassalamak, nemlemek we dikeltmek üçin intensiw biomaska. PLASMA® öýjük iýmitini üpjün edýär. Gözenegiň ululygyny azaldýar, deri reňkini deňleşdirýär.',
-      uz:"Yuz terisini chuqur tozalash, namlantirish va tiklash uchun intensiv biomaska. PLASMA® hujayra ovqatlanishini ta'minlaydi. G'ovakchalarni toraytiradi, teri rangini tekislaydi."
+      ru:'Интенсивный уход за кожей: очищение, увлажнение и восстановление.',
+      tk:'Ýüz üçin çuňňur ideg: arassalamak, nemlemek we dikeltmek.',
+      uz:"Yuz terisi uchun intensiv parvarish: tozalash, namlantirish va tiklash."
     },
-    composition:'Вода, PLASMA® экстракт ламинарии, глицерин, каолин, экстракт алоэ вера, пантенол, аллантоин, гиалуроновая кислота',
+    composition:'PLASMA водорослей, биоактивные компоненты',
     img:'IMG_8' },
   { id:10, name:'Масло для тела', cat:'cosm',
     prices:{ TKM:'640 манат', UZB:'480.000 сум' },
     volume:'150 мл',
     desc:{
-      ru:'Питательное масло для тела на основе натуральных растительных масел и компонентов морских водорослей. Глубоко увлажняет, повышает эластичность и упругость кожи. Оказывает антицеллюлитный эффект. Быстро впитывается, не оставляет жирного блеска.',
-      tk:'Tebigy ösümlik ýaglary we deňiz ösümlikleri düzümlerine esaslanan bedeni iýmitlendiriji ýag. Derini çuňňur nemledýär, elastikligini we berkligini artdyrýar. Antiselýulit täsiri bar.',
-      uz:"Tabiiy o'simlik yog'lari va dengiz o'tlari tarkibiga asoslangan tana oziqlantiruvchi moyi. Terini chuqur namlantiradi, elastiklik va barqarorligini oshiradi. Antisellülit ta'siri bor."
+      ru:'Питает и восстанавливает кожу, повышает её эластичность.',
+      tk:'Derini iýmitlendirýär we dikeldýär, elastikliligi artdyrýar.',
+      uz:"Terini oziqlantiradi va tiklaydi, elastikligini oshiradi."
     },
-    composition:'Масло жожоба, масло арганы, масло ши, экстракт ламинарии, витамин Е, токоферол, натуральные ароматизаторы',
+    composition:'Натуральные масла + компоненты водорослей',
     img:'IMG_9' },
   { id:11, name:'Thalasso Spa Gel', cat:'cosm',
     prices:{ TKM:'640 манат', UZB:'480.000 сум' },
     volume:'585 г',
     desc:{
-      ru:'Расслабляющий спа-гель для тела на основе морских водорослей и минералов. Снимает мышечное напряжение, улучшает кровообращение, восстанавливает кожу. Идеален после физических нагрузок или перед сном. Создаёт ощущение SPA-процедуры дома.',
-      tk:'Deňiz ösümlikleri we minerallar esasynda rahatlandyryjy spa-gel. Myşsa dartgynlylygyny aýyrýar, gan aýlanyşyny gowulandyrýar. Fiziki agram soňra ýa-da uka gitmezden ozal idealdyr.',
-      uz:"Dengiz o'tlari va minerallar asosida bo'shaduvchi spa-gel. Muskullar tarangligini olib tashlaydi, qon aylanishini yaxshilaydi. Jismoniy zo'riqishdan keyin yoki uxlashdan oldin ideal."
+      ru:'Расслабляющий гель для тела. Идеален перед сном: снимает напряжение и восстанавливает кожу.',
+      tk:'Bedeni rahatlandyrýan gel. Uka gitmezden ozal idealdyr: dartgynlygy aýyrýar we derini dikeldýär.',
+      uz:"Tanani bo'shaduvchi gel. Uxlashdan oldin ideal: taranglikni olib tashlaydi va terini tiklaydi."
     },
-    composition:'Водоросли (ламинария, фукус, спирулина), морские минералы, глицерин, пантенол, масло лаванды, экстракт морской соли',
+    composition:'Водоросли, минералы, активные био-компоненты',
     img:'IMG_10' },
   { id:12, name:'Hydrate Collagen', cat:'cosm',
     prices:{ TKM:'810 манат', UZB:'600.000 сум' },
     volume:'100 мл',
     desc:{
-      ru:'Увлажняющий коллагеновый гель с эффектом лифтинга. Нативный коллаген из кожи пресноводных рыб лучше усваивается организмом. Заполняет морщины, восстанавливает упругость кожи, улучшает её текстуру. Ионы серебра оказывают антибактериальный эффект.',
-      tk:'Göteriji täsiri bolan nemlendiriji kollagen gel. Süýdemsiz balyklaryň derisinden natiw kollagen organizm tarapyndan has gowy özleşdirilýär. Gyryşyklary dolduryp, deri elastikligini dikeldýär.',
-      uz:"Ko'tarish ta'siriga ega namlantiruvchi kollagen gel. Chuchuk baliq terisidan nativ kollagen organizm tomonidan yaxshiroq o'zlashtiriladi. Ajinlarni to'ldiradi, teri elastikligini tiklaydi."
+      ru:'Увлажняющий продукт для кожи с эффектом лифтинга. Поддерживает синтез коллагена и улучшает тонус кожи.',
+      tk:'Göteriji täsiri bilen nemlediji önüm. Kollagen sintezini goldaýar we deri tonusyny gowulandyrýar.',
+      uz:"Ko'tarish ta'siriga ega namlantiruvchi mahsulot. Kollagen sintezini qo'llab-quvvatlaydi va teri tonusini yaxshilaydi."
     },
-    composition:'Гидролизованный коллаген пресноводных рыб (Cyprinus carpio), коллоидные ионы серебра, гиалуроновая кислота, пантенол, глицерин',
+    composition:'Коллаген пресноводной рыбы, ионы серебра',
     img:'IMG_11' },
   { id:13, name:'Sea Honey', cat:'health',
     prices:{ TKM:'640 манат', UZB:'480.000 сум' },
     volume:'250 мл',
     desc:{
-      ru:'Уникальный продукт на стыке морского и пчелиного здоровья. Ламинария и фукус обеспечивают организм минералами и йодом, натуральный мёд с прополисом — мощный иммуномодулятор. Биофлавоноиды усиливают антиоксидантный эффект. Заряжает энергией, поддерживает иммунитет и ЖКТ.',
-      tk:'Deňiz we ary saglygyny birleşdirýän özboluşly önüm. Laminariýa we fukus minerallary we ýody üpjün edýär, propolisli bal güýçli immunomodulyatordyr. Bioflawonoitler antioksidant täsirini güýçlendirýär.',
-      uz:"Dengiz va ari salomatligi o'zaro uyg'unlashgan noyob mahsulot. Laminaria va fukus mineral va yod bilan ta'minlaydi, propolisli asal kuchli immunomodulyatordur. Bioflavonoidlar antioksidant ta'sirini kuchaytiradi."
+      ru:'Sea Honey — натуральный продукт на основе морских водорослей и природных компонентов. Источник энергии и природных биоактивных веществ для поддержания здоровья и жизненного тонуса.',
+      tk:'Sea Honey — deňiz ösümlikleri we tebigy komponentler esasynda taýýarlanan tebigy önüm. Saglyk we janlylygy goldamak üçin energiýa we tebigy bioaktiw maddalaryň çeşmesi.',
+      uz:"Sea Honey — dengiz o'tlari va tabiiy komponentlar asosida tayyorlangan tabiiy mahsulot. Salomatlik va hayotiy tonusni qo'llab-quvvatlash uchun energiya va tabiiy bioaktiv moddalar manbai."
     },
     composition:{
-      ru:'Экстракт морских водорослей (ламинария сахаристая, фукус пузырчатый), натуральный цветочный мёд, прополис, биофлавоноиды (кверцетин, рутин)',
-      tk:'Deňiz ösümlikleriniň ekstrakty (laminariýa şekerli, fukus köpürjikli), tebigy çemen baly, propolis, bioflawonoitler (kwersetin, rutin)',
-      uz:"Dengiz o'tlari ekstrakti (shakarli laminaria, pufakli fukus), tabiiy gul asali, propolis, bioflavonoidlar (kvetsetin, rutin)"
+      ru:'Экстракт морских водорослей (ламинария, фукус), натуральный мёд, прополис, биофлавоноиды',
+      tk:'Deňiz ösümlikleriniň ekstrakty (laminariýa, fukus), tebigy bal, propolis, bioflawonoitler',
+      uz:"Dengiz o'tlari ekstrakti (laminaria, fukus), tabiiy asal, propolis, bioflavonoidlar"
     },
     img:'IMG_13' },
   { id:14, name:'Коллаген + Витамин С', cat:'cosm',
     prices:{ TKM:'810 манат', UZB:'600.000 сум' },
     volume:'150 г',
     desc:{
-      ru:'Комплекс нативного коллагена с витамином С в порошке. Коллаген — основной строительный белок организма. Витамин С необходим для его синтеза и усвоения. Улучшает состояние кожи, укрепляет суставы и связки, поддерживает здоровье волос и ногтей.',
-      tk:'Witamin C bilen natiw kollagen toplumy tozy görnüşde. Kollagen — organizmiň esasy gurluş belogy. Witamin C sintezi we özleşdirilmegi üçin zerurdyr. Deri ýagdaýyny gowulandyrýar, bogunlary berkidýär.',
-      uz:"Kukun shaklida vitamin C bilan nativ kollagen kompleksi. Kollagen — organizmning asosiy qurilish oqsili. C vitamini uning sintezi va o'zlashtirilishi uchun zarur. Teri holatini yaxshilaydi, bo'g'imlarni mustahkamlaydi."
+      ru:'Комплекс нативного коллагена с витамином С. Борется с возрастными изменениями кожи, повышает эластичность связок и укрепляет волосы.',
+      tk:'Witamin C bilen täze kollagen toplumy. Deriniň ýaşa bagly üýtgemelerini azaldýar, baglamalaryň çeýeligini ýokarlandyrýar we saçlary berkidýär.',
+      uz:"Vitamin C bilan nativ kollagen kompleksi. Terining yoshga bog'liq o'zgarishlariga qarshi kurashadi, boylamlar elastikligini oshiradi va sochlarga mustahkamlik beradi."
     },
-    composition:'Гидролизат коллагена (рыбный), аскорбиновая кислота (витамин С), натуральный ароматизатор, стевия',
+    composition:'Коллаген гидролизат, витамин С, водоросли ламинария',
     img:'IMG_12' }];
 
 // ── PHONE BY COUNTRY ─────────────────────────────────
@@ -778,16 +779,12 @@ function renderReviews(productId) {
 function openModal(id) {
   const p = PRODUCTS.find(x => x.id === id);
   const desc = p.desc[LANG] || p.desc.ru;
-  // composition может быть строкой или объектом {ru, tk, uz}
-  const comp = (typeof p.composition === 'object')
-    ? (p.composition[LANG] || p.composition.ru)
-    : (p.composition || '');
-  document.getElementById('modalImg').src = IMGS[p.img] || '';
+  document.getElementById('modalImg').src = IMGS[p.img];
   document.getElementById('modalName').textContent = p.name;
-  document.getElementById('modalPrice').textContent = p.prices[COUNTRY] || p.prices.TKM;
+  document.getElementById('modalPrice').textContent = p.prices[COUNTRY];
   document.getElementById('modalDesc').textContent = desc;
   document.getElementById('modalVolume').textContent = p.volume;
-  document.getElementById('modalComposition').textContent = comp;
+  document.getElementById('modalComposition').textContent = p.composition;
 
   // Кнопка "Подробнее" в карточке — отправляет название товара в бот
   const moreInfoModalBtn = document.getElementById('moreInfoModalBtn');
